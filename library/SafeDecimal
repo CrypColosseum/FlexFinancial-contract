@@ -1,0 +1,34 @@
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.6.2;
+
+import "@pancakeswap/pancake-swap-lib/contracts/math/SafeMath.sol";
+
+
+library SafeDecimal {
+    using SafeMath for uint;
+
+    uint8 public constant decimals = 18;
+    uint public constant UNIT = 10 ** uint(decimals);
+
+    function unit() external pure returns (uint) {
+        return UNIT;
+    }
+
+    function multiply(uint x, uint y) internal pure returns (uint) {
+        return x.mul(y).div(UNIT);
+    }
+
+    // https://mpark.github.io/programming/2014/08/18/exponentiation-by-squaring/
+    function power(uint x, uint n) internal pure returns (uint) {
+        uint result = UNIT;
+        while (n > 0) {
+            if (n % 2 != 0) {
+                result = multiply(result, x);
+            }
+            x = multiply(x, x);
+            n /= 2;
+        }
+        return result;
+    }
+}

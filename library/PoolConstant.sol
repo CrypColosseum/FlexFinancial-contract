@@ -3,16 +3,16 @@ pragma solidity ^0.6.12;
 library PoolConstant {
 
     enum PoolTypes {
-        BunnyStake_deprecated, // no perf fee
-        BunnyFlip_deprecated, // deprecated
+        FlexStake_deprecated, // no perf fee
+        FlexFlip_deprecated, // deprecated
         CakeStake, FlipToFlip, FlipToCake,
-        Bunny, // no perf fee
-        BunnyBNB,
+        Flex, // no perf fee
+        FlexBNB,
         Venus,
         Collateral,
-        BunnyToBunny,
+        FlexToFlex,
         FlipToReward,
-        BunnyV2,
+        FlexV2,
         Qubit,
         bQBT, flipToQBT,
         Multiplexer
@@ -27,7 +27,7 @@ library PoolConstant {
         uint utilized;
         uint liquidity;
         uint pBASE;
-        uint pBUNNY;
+        uint pFlex;
         uint depositedAt;
         uint feeDuration;
         uint feePercentage;

@@ -2,8 +2,6 @@
 pragma solidity ^0.6.12;
 
 
-
-
 interface IVToken is IBEP20 {
     function underlying() external returns (address);
 

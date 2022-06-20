@@ -18,7 +18,7 @@ interface IPresale {
     function flipToken() view external returns(address);
 }
 
-contract BunnyPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGuard, Pausable {
+contract FlexPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGuard, Pausable {
     using SafeMath for uint256;
     using SafeBEP20 for IBEP20;
 

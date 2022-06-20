@@ -10,8 +10,8 @@ import "../interfaces/IPancakeRouter02.sol";
 import "../interfaces/IPancakePair.sol";
 import "../interfaces/IStrategy.sol";
 import "../interfaces/IMasterChef.sol";
-import "../interfaces/IBunnyMinterV2.sol";
-import "../interfaces/IBunnyChef.sol";
+import "../interfaces/IFlexMinterV2.sol";
+import "../interfaces/IFlexChef.sol";
 import "../library/PausableUpgradeable.sol";
 import "../library/WhitelistUpgradeable.sol";
 
@@ -25,8 +25,8 @@ abstract contract VaultController is IVaultController, PausableUpgradeable, Whit
 
     address public keeper;
     IBEP20 internal _stakingToken;
-    IBunnyMinterV2 internal _minter;
-    IBunnyChef internal _bunnyChef;
+    IFlexMinterV2 internal _minter;
+    IFlexChef internal _flexChef;
 
     /* ========== VARIABLE GAP ========== */
 

@@ -87,30 +87,30 @@ contract FlexPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGu
 
     function withdrawableBalanceOf(address account) override public view returns (uint) {
         if (block.timestamp > timestamp90DaysAfterPresaleEnds) {
-            // unlock all presale bunny after 90 days of presale
+            // unlock all presale flex after 90 days of presale
             return _balances[account];
         } else if (block.timestamp < timestamp2HoursAfterPresaleEnds) {
             return _balances[account].sub(_presaleBalance[account]);
         } else {
             uint soldInPresale = IPresale(presaleContract).totalBalance().div(2).mul(3); // mint 150% of presale for making flip token
-            uint bunnySupply = stakingToken.totalSupply().sub(stakingToken.balanceOf(deadAddress));
-            if (soldInPresale >= bunnySupply) {
+            uint flexSupply = stakingToken.totalSupply().sub(stakingToken.balanceOf(deadAddress));
+            if (soldInPresale >= flexSupply) {
                 return _balances[account].sub(_presaleBalance[account]);
             }
-            uint bunnyNewMint = bunnySupply.sub(soldInPresale);
-            if (bunnyNewMint >= soldInPresale) {
+            uint flexNewMint = flexSupply.sub(soldInPresale);
+            if (flexNewMint >= soldInPresale) {
                 return _balances[account];
             }
 
-            uint lockedRatio = (soldInPresale.sub(bunnyNewMint)).mul(1e18).div(soldInPresale);
+            uint lockedRatio = (soldInPresale.sub(flexNewMint)).mul(1e18).div(soldInPresale);
             uint lockedBalance = _presaleBalance[account].mul(lockedRatio).div(1e18);
             return _balances[account].sub(lockedBalance);
         }
     }
 
-    function profitOf(address account) override public view returns (uint _usd, uint _bunny, uint _bnb) {
+    function profitOf(address account) override public view returns (uint _usd, uint _flex, uint _bnb) {
         _usd = 0;
-        _bunny = 0;
+        _flex = 0;
         _bnb = helper.tvlInBNB(address(rewardsToken), earned(account));
     }
 
@@ -119,7 +119,7 @@ contract FlexPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGu
         return _totalSupply.mul(price).div(1e18);
     }
 
-    function apy() override public view returns(uint _usd, uint _bunny, uint _bnb) {
+    function apy() override public view returns(uint _usd, uint _flex, uint _bnb) {
         uint tokenDecimals = 1e18;
         uint __totalSupply = _totalSupply;
         if (__totalSupply == 0) {
@@ -127,12 +127,12 @@ contract FlexPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGu
         }
 
         uint rewardPerTokenPerSecond = rewardRate.mul(tokenDecimals).div(__totalSupply);
-        uint bunnyPrice = helper.tokenPriceInBNB(address(stakingToken));
+        uint flexPrice = helper.tokenPriceInBNB(address(stakingToken));
         uint flipPrice = helper.tvlInBNB(address(rewardsToken), 1e18);
 
         _usd = 0;
-        _bunny = 0;
-        _bnb = rewardPerTokenPerSecond.mul(365 days).mul(flipPrice).div(bunnyPrice);
+        _flex = 0;
+        _bnb = rewardPerTokenPerSecond.mul(365 days).mul(flipPrice).div(flexPrice);
     }
 
     function lastTimeRewardApplicable() public view returns (uint256) {
@@ -224,18 +224,18 @@ contract FlexPool is IStrategyLegacy, RewardsDistributionRecipient, ReentrancyGu
         userInfo.available = withdrawableBalanceOf(account);
 
         Profit memory profit;
-        (uint usd, uint bunny, uint bnb) = profitOf(account);
+        (uint usd, uint flex, uint bnb) = profitOf(account);
         profit.usd = usd;
-        profit.bunny = bunny;
+        profit.flex = flex;
         profit.bnb = bnb;
         userInfo.profit = profit;
 
         userInfo.poolTVL = tvl();
 
         APY memory poolAPY;
-        (usd, bunny, bnb) = apy();
+        (usd, flex, bnb) = apy();
         poolAPY.usd = usd;
-        poolAPY.bunny = bunny;
+        poolAPY.flex = flex;
         poolAPY.bnb = bnb;
         userInfo.poolAPY = poolAPY;
 

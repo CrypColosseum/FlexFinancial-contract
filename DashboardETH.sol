@@ -8,7 +8,6 @@ import {PoolConstant} from "../library/PoolConstant.sol";
 import "../interfaces/IVaultCollateral.sol";
 import "./calculator/PriceCalculatorETH.sol";
 
-
 contract DashboardETH is OwnableUpgradeable {
     using SafeMath for uint;
 

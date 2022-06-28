@@ -64,8 +64,8 @@ abstract contract VaultController is IVaultController, PausableUpgradeable, Whit
         return address(_minter) != address(0) && _minter.isMinter(address(this));
     }
 
-    function bunnyChef() external view override returns (address) {
-        return address(_bunnyChef);
+    function flexChef() external view override returns (address) {
+        return address(_flexChef);
     }
 
     function stakingToken() external view override returns (address) {
@@ -82,17 +82,17 @@ abstract contract VaultController is IVaultController, PausableUpgradeable, Whit
     function setMinter(address newMinter) virtual public onlyOwner {
         // can zero
         if (newMinter != address(0)) {
-            require(newMinter == BUNNY.getOwner(), 'VaultController: not bunny minter');
+            require(newMinter == FLEX.getOwner(), 'VaultController: not flex minter');
             _stakingToken.safeApprove(newMinter, 0);
             _stakingToken.safeApprove(newMinter, uint(- 1));
         }
         if (address(_minter) != address(0)) _stakingToken.safeApprove(address(_minter), 0);
-        _minter = IBunnyMinterV2(newMinter);
+        _minter = IFlexMinterV2(newMinter);
     }
 
-    function setBunnyChef(IBunnyChef newBunnyChef) virtual public onlyOwner {
-        require(address(_bunnyChef) == address(0), 'VaultController: setBunnyChef only once');
-        _bunnyChef = newBunnyChef;
+    function setFlexChef(IFlexChef newFlexChef) virtual public onlyOwner {
+        require(address(_flexChef) == address(0), 'VaultController: setFlexChef only once');
+        _flexChef = newFlexChef;
     }
 
     /* ========== SALVAGE PURPOSE ONLY ========== */

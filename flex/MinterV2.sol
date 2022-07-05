@@ -19,8 +19,8 @@ contract FlexMinterV2 is IFlexMinterV2, OwnableUpgradeable {
     /* ========== CONSTANTS ============= */
 
     address public constant WBNB = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
-    address public constant Flex = 0xC9849E6fdB743d08fAeE3E34dd2D1bc69EA11a51;
-    address public constant Flex_POOL_V1 = 0xCADc8CB26c8C7cB46500E61171b5F27e9bd7889D;
+    address public constant Flex = ;
+    address public constant Flex_POOL_V1 = ;
 
     address public constant FEE_BOX = 0x3749f69B2D99E5586D95d95B6F9B5252C71894bb;
     address private constant TIMELOCK = 0x85c9162A51E03078bdCd08D4232Bab13ed414cC3;

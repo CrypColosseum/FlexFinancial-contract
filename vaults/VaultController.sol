@@ -20,7 +20,6 @@ abstract contract VaultController is IVaultController, PausableUpgradeable, Whit
     using SafeBEP20 for IBEP20;
 
 
-
     /* ========== STATE VARIABLES ========== */
 
     address public keeper;

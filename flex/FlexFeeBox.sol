@@ -86,15 +86,15 @@ contract FlexFeeBox is WhitelistUpgradeable {
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
+    function setFlexPool(address _FlexPool) external onlyOwner {
+        FlexPool = _FlexPool;
+    }
 
     function setKeeper(address _keeper) external onlyOwner {
         keeper = _keeper;
     }
 
-    function setFlexPool(address _FlexPool) external onlyOwner {
-        FlexPool = _FlexPool;
-    }
-
+  
     function swapToRewards() public onlyKeeper {
         require(FlexPool != address(0), "FlexFeeBox: FlexPool must be set");
 

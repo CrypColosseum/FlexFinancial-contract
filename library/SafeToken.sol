@@ -7,14 +7,6 @@ interface ERC20Interface {
 }
 
 library SafeToken {
-    function myBalance(address token) internal view returns (uint256) {
-        return ERC20Interface(token).balanceOf(address(this));
-    }
-
-    function balanceOf(address token, address user) internal view returns (uint256) {
-        return ERC20Interface(token).balanceOf(user);
-    }
-
     function safeApprove(address token, address to, uint256 value) internal {
         // bytes4(keccak256(bytes('approve(address,uint256)')));
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0x095ea7b3, to, value));
@@ -32,6 +24,15 @@ library SafeToken {
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0x23b872dd, from, to, value));
         require(success && (data.length == 0 || abi.decode(data, (bool))), "!safeTransferFrom");
     }
+    function myBalance(address token) internal view returns (uint256) {
+        return ERC20Interface(token).balanceOf(address(this));
+    }
+
+    function balanceOf(address token, address user) internal view returns (uint256) {
+        return ERC20Interface(token).balanceOf(user);
+    }
+
+   
 
     function safeTransferETH(address to, uint256 value) internal {
         (bool success, ) = to.call{ value: value }(new bytes(0));
